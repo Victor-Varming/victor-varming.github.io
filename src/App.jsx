@@ -7,9 +7,6 @@ import assignBondsCode from './code-snippets/assign_bonds.py?raw';
 // ====================================================================
 // HERO COMPONENT
 // ====================================================================
-// ====================================================================
-// HERO COMPONENT
-// ====================================================================
 const Hero = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -20,14 +17,11 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
-      
-      {/* --- Work in Progress Notice --- */}
-      <div className="absolute bottom-6 left-6 z-20 bg-gray-100 text-gray-800 border border-gray-300 rounded-lg px-5 py-3 text-sm shadow-md max-w-xs">
-        This page is a work in progress, so certain elements aren't yet complete.
-      </div>
-
-      {/* --- Background blurred bars --- */}
+    <section
+      id="start"
+      className="relative h-screen snap-start flex flex-col items-center justify-center overflow-hidden bg-white"
+    >
+      {/* Background blur */}
       <div
         className="absolute inset-0 bg-center bg-cover blur-xl scale-110 opacity-60"
         style={{
@@ -36,37 +30,27 @@ const Hero = () => {
         }}
       />
 
-      {/* --- Centered fixed-width portrait area --- */}
-      <div className="relative z-10 w-[1920px] max-w-full mx-auto h-full flex items-center justify-center">
+      {/* Portrait */}
+      <div className="relative z-10 w-[1920px] max-w-full h-full flex items-center justify-center">
         <img
           src="/hero.jpg"
           className="h-full object-contain transition-all duration-700"
-          style={{
-            filter: scrolled ? "blur(10px) brightness(1.1)" : "none",
-          }}
+          style={{ filter: scrolled ? "blur(10px) brightness(1.1)" : "none" }}
         />
         
         {/* Text overlay */}
         <div className="absolute text-center">
-          <h1
-            className="text-6xl md:text-8xl font-bold text-white mb-4"
-            style={{ textShadow: "2px 2px 20px rgba(0,0,0,0.6)" }}
-          >
+          <h1 className="text-6xl md:text-8xl font-bold text-white mb-4" style={{ textShadow: "2px 2px 20px rgba(0,0,0,0.6)" }}>
             Victor Varming
           </h1>
-          <p
-            className="text-2xl md:text-3xl text-white"
-            style={{ textShadow: "1px 1px 15px rgba(0,0,0,0.6)" }}
-          >
+          <p className="text-2xl md:text-3xl text-white" style={{ textShadow: "1px 1px 15px rgba(0,0,0,0.6)" }}>
             Computational Chemist with a Background in Pharmaceutical Sciences
           </p>
         </div>
-
       </div>
-    </div>
+    </section>
   );
 };
-
 
 // ====================================================================
 // NAVIGATION COMPONENT
@@ -98,26 +82,25 @@ const Navigation = ({ activeSection, sections }) => {
 };
 
 // ====================================================================
-// RESUME COMPONENT
+// RESUME COMPONENT (SVG)
 // ====================================================================
 const Resume = () => {
-  const resumePdfUrl = '/resume.pdf';
   return (
-    <section id="resume" className="w-full min-h-screen py-20 bg-gradient-to-b from-blue-50 to-white">
+    <section id="resume" className="w-full min-h-screen py-20 bg-gradient-to-b from-blue-50 to-white snap-start">
       <div className="w-3/4 max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold mb-8 text-blue-900 text-center">Resumé</h2>
-        <div className="w-full overflow-hidden bg-white rounded-lg shadow-lg aspect-[1/1.414]">
-          <iframe
-            src={`${resumePdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-            className="w-full h-full border-0"
-            title="Resume PDF"
-            style={{ backgroundColor: 'white' }}
+        <div className="w-full overflow-hidden bg-white rounded-lg shadow-lg aspect-[1/1.414] flex items-center justify-center">
+          <img
+            src="/resume.svg"
+            alt="Victor Varming Resumé"
+            className="w-full h-full object-contain"
           />
         </div>
       </div>
     </section>
   );
 };
+
 
 // ====================================================================
 // SCIENCE COMMUNICATION COMPONENT
@@ -150,34 +133,105 @@ const PdfViewer = ({ file }) => {
 };
 
 const ScienceCommunication = () => {
-  const content = [
-    { type: 'pdf', title: 'Research Poster: DeepDockingDare', file: '/posters/poster1.pdf', description: 'Poster presented at Center for Pharmaceutical Data Education Symposium' },
+  const videos = [
+    { src: "/videos/1.mp4", title: "Ligand Binding Pocket: Co-Folded without α-subunit" },
+    {
+      src: "/videos/2.mp4",
+      title: (
+        <>
+          Protein Morph: Co-folded without → with α-subunit.<br />
+          The α-subunit forces correct bending of receptor chain α-helix
+        </>
+      ),
+      cropLeft: true, // flag to apply left crop
+    },       
+    { src: "/videos/3.mp4", title: "Ligand pocket morph: Co-folded without → with α-subunit" },
+    { src: "/videos/4.mp4", title: "Ligand binding pocket: Co-folded with α-subunit" },
   ];
 
   return (
-    <section id="science-comm" className="w-full min-h-screen py-20 bg-gradient-to-b from-green-50 to-white">
-      <div className="w-3/4 max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-green-900">Scientific<br />Communication</h2>
+    <section
+      id="science-comm"
+      className="w-full min-h-screen py-20 bg-gradient-to-b from-green-50 to-white"
+    >
+      <div className="w-3/4 max-w-6xl mx-auto space-y-24">
+
+        {/* SECTION TITLE */}
+        <h2 className="text-4xl md:text-5xl font-bold text-green-900 mb-12 text-center">
+          Scientific Communication
+        </h2>
+
+        {/* PROTEIN VISUALISATIONS */}
         <div className="space-y-12">
-          {content.map((item, idx) => (
-            <div key={idx} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-green-100 px-6 py-4">
-                <h3 className="text-2xl font-semibold text-green-900">{item.title}</h3>
-                <p className="text-gray-700 mt-1">{item.description}</p>
+
+          {/* Sticky section header */}
+          <div className="sticky top-0 z-30 bg-green-100 px-6 py-4 rounded shadow-md border-b">
+            <h3 className="text-3xl font-semibold text-green-900 mb-2">
+              A Case Study in GPCR Co-folding: The Effect of the α-Subunit
+            </h3>
+            <p className="text-gray-700">
+              A prostacyclin receptor co-folded with a ligand by AlphaFold 3, both with and without its G-protein α-subunit.<br />
+              The α-subunit in this case significantly alters the predicted conformation of the receptor chain and thereby the ligand binding pocket.
+            </p>
+          </div>
+
+          {/* Videos */}
+          {videos.map((video, idx) => (
+            <div
+              key={idx}
+              className="relative bg-white rounded-lg shadow-md overflow-hidden"
+            >
+              {/* Video */}
+              <video
+                src={video.src}
+                autoPlay
+                loop
+                muted
+                className={`w-full rounded-lg ${video.cropLeft ? "object-cover object-[-100px_0]" : ""}`}
+              />
+
+              {/* Title overlay (top center) */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-green-900 bg-opacity-70 text-white px-4 py-2 rounded text-lg font-semibold text-center z-20">
+                {video.title}
               </div>
-              {item.type === 'video' && (
-                <div className="aspect-video">
-                  <iframe src={item.url} className="w-full h-full" allowFullScreen title={item.title} />
-                </div>
-              )}
-              {item.type === 'pdf' && <PdfViewer file={item.file} />}
+
+              {/* Legend overlay (left, vertically centered) */}
+              <div className="absolute top-1/2 left-4 -translate-y-1/2 bg-green-100 bg-opacity-80 text-green-900 p-4 rounded shadow-md z-20">
+                <p>Ground Truth Protein: Grey</p>
+                <p>Ground Truth Ligand: White</p>
+                <p>AlphaFold 3 Folded Protein: Blue</p>
+                <p>AlphaFold 3 Folded Ligand: Light Blue</p>
+              </div>
             </div>
           ))}
+
         </div>
+
+        {/* RESEARCH POSTER */}
+        <div className="relative bg-white rounded-lg shadow-md overflow-hidden">
+          {/* Sticky header */}
+          <div className="sticky top-0 z-20 bg-green-100 px-6 py-4 border-b rounded shadow-md">
+            <h3 className="text-2xl font-semibold text-green-900">
+              Research Poster: DeepDockingDare
+            </h3>
+            <p className="text-gray-700 mt-1">
+              Poster presented at Center for Pharmaceutical Data Education Symposium
+            </p>
+          </div>
+
+          {/* Poster content */}
+          <div className="px-6 py-6">
+            <PdfViewer file="/posters/poster1.pdf" />
+          </div>
+        </div>
+
       </div>
     </section>
   );
 };
+
+
+
 
 // ====================================================================
 // CODE SNIPPETS COMPONENT
@@ -338,15 +392,11 @@ const Awards = () => {
 // ====================================================================
 // ABOUT ME COMPONENT
 // ====================================================================
-// ====================================================================
-// ABOUT ME COMPONENT
-// ====================================================================
 const AboutMe = () => {
   const bio = (
     <>
       I'm from the countryside and grew up between horses and trees.<br />
       As such, I like spending my free time outdoors, preferably hiking up a mountain.<br /><br />
-
       I moved to Copenhagen at the start of my bachelor's degree and really fell in love with the city.<br />
       During my studies, I became very involved in the student community. For example, by volunteering as a tutor for four years.
     </>
@@ -361,36 +411,21 @@ const AboutMe = () => {
   ];
 
   return (
-    <section id="about" className="w-full min-h-screen py-20 bg-gradient-to-b from-white to-pink-50">
+    <section id="about" className="w-full min-h-screen py-20 bg-gradient-to-b from-pink-50 to-white snap-start">
       <div className="w-3/4 max-w-6xl mx-auto">
-        {/* TITLE */}
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-pink-900">
-          About Me
-        </h2>
-
+        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-pink-900">About Me</h2>
         <div className="grid md:grid-cols-2 gap-10 items-start">
-          
-          {/* BIO TEXT */}
-          <div className="text-gray-700 leading-relaxed text-lg">
-            {bio}
-          </div>
+          {/* BIO */}
+          <div className="text-gray-700 leading-relaxed text-lg">{bio}</div>
 
           {/* IMAGE GRID */}
           <div className="grid grid-cols-2 gap-4">
             {images.map((img, idx) => (
-              <div 
-                key={idx} 
-                className="w-full h-40 md:h-48 lg:h-56 overflow-hidden rounded-lg shadow-md"
-              >
-                <img 
-                  src={img.src} 
-                  alt={`About me ${idx}`} 
-                  className="w-full h-full object-cover"
-                />
+              <div key={idx} className="w-full h-40 md:h-48 lg:h-56 overflow-hidden rounded-lg shadow-md">
+                <img src={img.src} alt={`About me ${idx}`} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </section>
@@ -438,10 +473,10 @@ const Contact = () => {
 };
 
 // ====================================================================
-// MAIN APP COMPONENT
+// MAIN APP WRAP
 // ====================================================================
 export default function App() {
-  const [activeSection, setActiveSection] = useState('resume');
+  const [activeSection, setActiveSection] = useState('start');
 
   const sections = [
     { id: 'resume', title: 'Resumé', color: '#93c5fd' },
@@ -452,6 +487,7 @@ export default function App() {
     { id: 'about', title: 'About Me', color: '#facc15' },
     { id: 'contact', title: 'Contact', color: '#14b8a6' },
   ];
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -470,16 +506,18 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-white">
-      <Hero />
+    <div className="bg-white snap-y snap-mandatory overflow-y-scroll h-screen">
       <Navigation activeSection={activeSection} sections={sections} />
-      <Resume />
-      <ScienceCommunication />
-      <CodeSnippets snippets={snippets} />
-      <Publications />
-      <Awards />
-      <AboutMe />
-      <Contact />
+      <main className="snap-y snap-mandatory">
+        <Hero />
+        <Resume />
+        <ScienceCommunication />
+        <CodeSnippets snippets={snippets} />
+        <Publications />
+        <Awards />
+        <AboutMe />
+        <Contact />
+      </main>
     </div>
   );
 }

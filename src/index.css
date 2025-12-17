@@ -69,3 +69,23 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+/* Scroll container */
+main {
+  height: 100vh;
+  overscroll-behavior-y: contain;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory; /* change to 'mandatory' for stricter snapping or proximity for less */
+}
+
+/* Each section snaps */
+section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+}
