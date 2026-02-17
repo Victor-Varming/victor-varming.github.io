@@ -81,30 +81,7 @@ const Navigation = ({ activeSection, sections }) => {
   );
 };
 
-// ====================================================================
-// RESUME COMPONENT (SVG)
-// ====================================================================
-const Resume = () => {
-  return (
-    <section id="resume" className="w-full min-h-screen py-20 bg-gradient-to-b from-blue-50 to-white snap-start">
-      <div className="w-3/4 max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-blue-900 text-center">Resumé</h2>
-        <div className="w-full overflow-hidden bg-white rounded-lg shadow-lg aspect-[1/1.414] flex items-center justify-center">
-          <img
-            src="/resume.svg"
-            alt="Victor Varming Resumé"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      </div>
-    </section>
-  );
-};
 
-
-// ====================================================================
-// SCIENCE COMMUNICATION COMPONENT
-// ====================================================================
 const PdfViewer = ({ file }) => {
   const iframeRef = useRef(null);
   const [height, setHeight] = useState(0);
@@ -123,14 +100,45 @@ const PdfViewer = ({ file }) => {
   return (
     <div ref={iframeRef} className="w-full overflow-hidden">
       <iframe
-        src={`${file}#toolbar=0&navpanes=0&scrollbar=0`}
+        ref={iframeRef}
+        src={`${file}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
         className="w-full border-0"
-        style={{ height, display: height ? 'block' : 'none', backgroundColor: 'white' }}
-        title={file}
+        style={{ height }}
       />
     </div>
   );
 };
+
+// ====================================================================
+// RESUME COMPONENT (PDF)
+// ====================================================================
+const Resume = () => {
+  return (
+    <section
+      id="resume"
+      className="w-full min-h-screen py-20 bg-gradient-to-b from-blue-50 to-white snap-start"
+    >
+      <div className="w-3/4 max-w-6xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-blue-900 text-center">
+          Resumé
+        </h2>
+
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+          <div className="px-6 py-6">
+            <PdfViewer file="/resume.pdf" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
+
+// ====================================================================
+// SCIENCE COMMUNICATION COMPONENT
+// ====================================================================
+
 
 const ScienceCommunication = () => {
   const videos = [
