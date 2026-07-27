@@ -151,7 +151,7 @@ const Resume = () => {
 
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
           <div className="px-6 py-6">
-            <PdfViewer file="/Resume.pdf" />
+            <PdfViewer file="/resume.pdf" />
           </div>
         </div>
       </div>
