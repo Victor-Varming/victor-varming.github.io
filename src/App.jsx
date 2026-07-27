@@ -83,6 +83,32 @@ const Navigation = ({ activeSection, sections }) => {
 
 
 const PdfViewer = ({ file }) => {
+  const containerRef = useRef(null);
+  const [height, setHeight] = useState(0);
+  const A4_RATIO = 1.414;
+
+  useEffect(() => {
+    const updateHeight = () => {
+      const containerWidth = containerRef.current?.offsetWidth || 0;
+      setHeight(containerWidth * A4_RATIO);
+    };
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="w-full overflow-hidden">
+      <iframe
+        src={`${file}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+        className="w-full border-0"
+        style={{ height }}
+      />
+    </div>
+  );
+};
+
+const PosterPdfViewer = ({ file }) => {
   const iframeRef = useRef(null);
   const [height, setHeight] = useState(0);
   const A4_RATIO = 1.414;
@@ -125,7 +151,7 @@ const Resume = () => {
 
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
           <div className="px-6 py-6">
-            <PdfViewer file="/resume.pdf" />
+            <PdfViewer file="/Resume.pdf" />
           </div>
         </div>
       </div>
@@ -229,7 +255,7 @@ const ScienceCommunication = () => {
 
           {/* Poster content */}
           <div className="px-6 py-6">
-            <PdfViewer file="/posters/poster1.pdf" />
+            <PosterPdfViewer file="/posters/poster1.pdf" />
           </div>
         </div>
 
